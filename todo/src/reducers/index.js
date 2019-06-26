@@ -13,7 +13,15 @@ function reducer(state = initalState, action) {
                 ...state,
                 todo: [...state.todo, action.payload]
             }
-        
+        case 'COMPLETE_TODO':
+            return {
+                ...state,
+                todo: state.todo.map((todo, index) =>
+                    action.payload === index
+                    ? { ...todo, completed: !todo.completed }
+                    : todo
+                )
+                };
         default:
             return state;
     }

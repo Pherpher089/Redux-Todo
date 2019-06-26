@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {addTodo} from '../actions/index'
-
+import {addTodo, completeTodo} from '../actions/index'
+import '../styles/index.css'
 class Todo extends React.Component {
 
     constructor(props){
@@ -22,6 +22,10 @@ class Todo extends React.Component {
         this.setState({newTodo: ''})
     }
 
+    completeTodo = (e, index) =>{
+        this.props.completeTodo(index)
+    }
+
     render(){
         return(
             <div>
@@ -29,8 +33,8 @@ class Todo extends React.Component {
                 <h3>Brought to you by REDUX</h3>
 
                 <div className='TodoList'>
-                    {this.props.todo.map(todo =>(
-                        <h1>
+                    {this.props.todo.map((todo, index) =>(
+                        <h1 onClick={e => this.completeTodo(e, index)} key={index} className={todo.completed ? 'completed':''}>
                             {todo.todo}
                         </h1>
                     ))
@@ -55,5 +59,5 @@ const mapStateToProps = state => {
 }
 
 export default connect(
-    mapStateToProps, {addTodo}
+    mapStateToProps, {addTodo, completeTodo}
 )(Todo)
